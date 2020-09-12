@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Algo from './algo';
 
+
 function home() {
 
     return (
@@ -12,6 +13,7 @@ function home() {
                     <Link to="/algo">kruskal</Link>
                 </Button>
                 <Route path="/algo" render={() => <Algo />} />
+                
             </Router>
             
         </div>

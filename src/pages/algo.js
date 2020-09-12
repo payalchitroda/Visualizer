@@ -11,10 +11,10 @@ class Algo extends React.Component {
     
     graphinput(node, edges) {
         var n = parseInt(node);
-       // console.log(node, edges);
+        console.log("edge"+edges.length);
         var e = [];
         var k = 0;
-        for (var i = 0; i < n; i++) {
+        for (var i = 0; i < (edges.length/6); i++) {
             var data = [];
             for (var j = 0; j < 3; j++) {
                 data.push(edges.charAt(k));
@@ -22,11 +22,12 @@ class Algo extends React.Component {
             }
             e.push(data);
         }
-        for (var i = 0; i < n; i++) {
-            for (var j = 0; j < 3; j++) {
-                console.log(e[i][j]);
-            }
-        }
+        console.log("e"+e);
+        // for (var i = 0; i < n; i++) {
+        //     for (var j = 0; j < 3; j++) {
+        //         console.log(e[i][j]);
+        //     }
+        // }
         this.setState({data:e,numberofnodes:n});
     }
 
