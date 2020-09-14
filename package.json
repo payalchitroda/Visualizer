@@ -10,6 +10,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.2",
+    "gapi-script": "^1.0.2",
+    "informed": "^3.9.0",
     "konva": "^7.0.7",
     "mdbreact": "^4.27.0",
     "react": "^16.13.1",

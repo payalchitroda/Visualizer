@@ -1,5 +1,7 @@
 import React from 'react';
 import Konva from 'konva';
+// import Kruskal from '../pages/kruskal.js';
+import '../pages/kruskal.js';
 //import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 function Node(props) {
@@ -37,12 +39,19 @@ var lines=[]
   {
     var index1= (b[i-1][0]-1)*2;
     var index2= (b[i-1][1]-1)*2;
+    var weight =b[i-1][2];
     var a= graph[index1];
     var c=graph[index2];
     console.log(index1+" "+index2);
     lines.push(<Line points={[a.props.x, a.props.y, c.props.x,c.props.y]} stroke='black' strokeWidth={3}/>)
-  
+    var tx=((a.props.x+c.props.x)/2);
+    var ty=((a.props.y+c.props.y)/2);
+  lines.push( <Text text={weight} x={tx} y={ty} fontSize={20}/>)
+
     console.log(a.props.x +" "+a.props.y+" "+c.props.x+" "+c.props.y);
+
+    // kruskalalgo = new Kruskal();
+    // kruskalalgo.minimumCost(a,b);
   }
   
     return(

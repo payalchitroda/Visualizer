@@ -11,7 +11,7 @@ class Algo extends React.Component {
     
     graphinput(node, edges) {
         var n = parseInt(node);
-        console.log("edge"+edges.length);
+        //console.log("edge"+edges.length);
         var e = [];
         var k = 0;
         for (var i = 0; i < (edges.length/6); i++) {
