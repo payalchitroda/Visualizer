@@ -1,9 +1,10 @@
 import React from 'react';
 import Konva from 'konva';
-// import Kruskal from '../pages/kruskal.js';
-import '../pages/kruskal.js';
+import {Kruskal} from '../pages/kruskal.js';
+
 //import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
+
 function Node(props) {
   var a=props.numberofnodes
   var b=props.data;
@@ -49,9 +50,8 @@ var lines=[]
   lines.push( <Text text={weight} x={tx} y={ty} fontSize={20}/>)
 
     console.log(a.props.x +" "+a.props.y+" "+c.props.x+" "+c.props.y);
-
-    // kruskalalgo = new Kruskal();
-    // kruskalalgo.minimumCost(a,b);
+     var kruskalalgo =new Kruskal().minimumCost(a,b);
+    
   }
   
     return(
@@ -75,5 +75,6 @@ var lines=[]
     );
 
 }
+
 
 export default Node;
