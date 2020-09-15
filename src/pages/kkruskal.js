@@ -28,15 +28,17 @@ export class Kruskal {
         for (var i = 0; i <= N; i++) {
             this.parent[i] = i;
         }
-
         connections.sort(function (a, b) { return (a[2] - b[2]) });
-            document.write(connections[0]);
+       
             for (var i = 0; i < connections.length; i++) {
-                // document.write(connections[i]);
-                var x = connections[i][0], y = connections[i][0];
-                //document.write(x);
+                
+                var x = connections[i][0], y = connections[i][1];
+
+
+                console.log(x+" "+y);
                 if (this.find(x) != this.find(y)) {
-                    //document.write(connections[i]);
+                    console.log(x+" "+y);
+                  //document.write(x+" "+y);
                     this.union(x, y);
                 }
             }
@@ -45,7 +47,7 @@ export class Kruskal {
 
 }
 
-// var twoD = [[1, 2, 3], [2, 3, 4], [1, 4, 2], [1, 3, 1]];
-// new Kruskal().minimumCost(4, twoD);
+//  var twoD = [[1, 2, 3], [2, 3, 4], [1, 4, 2]];
+//  new Kruskal().minimumCost(4, twoD);
 
 
