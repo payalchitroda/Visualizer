@@ -30,10 +30,10 @@ class Kruskal extends React.Component {
         var temp3 = <Line points={[d.props.x, d.props.y, c.props.x, c.props.y]} stroke="red" strokeWidth={3} />
         graph.push(temp1);
         graph.push(temp2);
-        lines.push(temp3);
+        //graph.push(temp3);
         console.log("D" + d.props.id + "   C" + c.props.id);
         console.log("nodes" + temp1.props.fill);
-        this.updateline(lines);
+        //this.updateline(lines);
         this.updateline(graph);
         var px = this.find(x);
         var py = this.find(y);
@@ -90,12 +90,9 @@ class Kruskal extends React.Component {
 
     minimumCost(connections) {
 
-        console.log(connections.length);
-
         var j = this.state.i;
         var lines = this.state.lines;
         var graph = this.state.graph;
-        console.log("ij " + this.state.i + "  " + j);
         var x = connections[j][0], y = connections[j][1];
         console.log("connections " + x + "  " + y);
 
@@ -105,11 +102,12 @@ class Kruskal extends React.Component {
         var d = this.state.graph[index1];
         var c = this.state.graph[index2];
         var temp = <Line points={[d.props.x, d.props.y, c.props.x, c.props.y]} stroke="blue" strokeWidth={3} />
-        lines.push(temp);
+        //lines.push(temp);
+        graph.push(temp);
         console.log("D" + d.props.id + "   C" + c.props.id);
         console.log("line" + temp.props.stroke);
         // Object.assign(d, temp)
-        this.updateline(lines);
+        this.updateline(graph);
         if (this.find(x) != this.find(y)) {
 
             this.union(x, y,this.state.connections);
@@ -121,11 +119,11 @@ class Kruskal extends React.Component {
 
     }
 
-    updategraph(b) {
-        this.setState({ graph: b })
+    updategraph(p) {
+        this.setState({ graph: p })
     }
-    updateline(b) {
-        this.setState({ lines: b })
+    updateline(q) {
+        this.setState({ lines: q })
     }
 
 
