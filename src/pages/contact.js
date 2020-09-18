@@ -11,14 +11,19 @@ class Contact extends React.Component {
 
     
     onSubmit(event){
-        let query = `&entry.1238625935=${event.target.name.value}&entry.941955885=${event.target.email.value}&entry.1797898034=${event.target.message.value}`;
-        let url = `https://docs.google.com/forms/d/1VuGYBKFjIxt5Nn1qsYQd_cWf5d9yc2EEwN01kkjV4AQ/formResponse?${query}`;
         
-        fetch(url, {
-            mode: "no-cors"
-        }).then((res) => {
-          
-        });
+            let query = `&entry.1238625935=${event.target.name.value}&entry.941955885=${event.target.email.value}&entry.1797898034=${event.target.message.value}`;
+            let url = `https://docs.google.com/forms/d/1VuGYBKFjIxt5Nn1qsYQd_cWf5d9yc2EEwN01kkjV4AQ/formResponse?${query}`;
+            
+            fetch(url, {
+                mode: "no-cors"
+            }).then((res) => {
+              
+            });
+        alert("Successfully sent data");
+       
+
+       
     }
 
     render() {

@@ -67,10 +67,7 @@
 //     return (
 
 //       <div >
-//         <button onClick={this.kruskalrender}>step</button>
-
-//         {/* <Kruskal nodes={this.a} connections={this.b} g={this.state.graph} l={this.state.lines} /> */}
-
+//         <Kruskal nodes={this.state.a} connections={this.state.b} graph={this.state.graph} lines={this.state.lines}/>
 
 //       </div>
 //     );
@@ -84,8 +81,6 @@
 import React, { useState } from 'react';
 import Konva from 'konva';
 import Kruskal from './kruskal.js';
-
-//import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 
 function Node(props) {
@@ -134,19 +129,18 @@ function Node(props) {
   // setLines(l);
 
   return (
-    <div>
+      <div>
       <Kruskal nodes={a} connections={b} />
     </div>
-    //    <Stage width={1600} height={800}>
-    //    <Layer id="layer">
-    //     {graph}
-    //     {lines}
-    //      {g}
+    // <Stage width={1600} height={800}>
+    //   <Layer id="layer">
+    //     {g}
     //     {l}
+    //   </Layer>
+    // </Stage>
 
 
-    //    </Layer>
-    //  </Stage>
+
   );
 
 }
