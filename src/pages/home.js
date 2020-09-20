@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Algo from './algo';
-
+import CoinChangeInput from './coinchangeinput';
 
 function home() {
 
@@ -13,6 +13,10 @@ function home() {
                     <Link to="/algo">kruskal</Link>
                 </Button>
                 <Route path="/algo" render={() => <Algo />} />
+                <Button variant="dark">
+                    <Link to="/coinchangeinput">coin chnage</Link>
+                </Button>
+                <Route path="/coinchangeinput" render={() => <CoinChangeInput />} />
                 
             </Router>
             

@@ -11,8 +11,8 @@
 //     super(props);
 
 //     this.state = {
-//       a: props.numberofnodes,
-//       b: props.data,
+//       // a: props.numberofnodes,
+//       // b: props.data,
 //       graph: [],
 //       lines: []
 //     }
@@ -22,13 +22,13 @@
 
 //   mount() {
 
-
+// var a=this.props.numberofnodes
 //     var cx = 0, cy1 = 100, w = 300, cy2 = 300, cy;
 //     var flag = true;
 
-//     console.log("a" + this.state.a);
+//     console.log("a" + a);
 //     var g = [];
-//     for (var i = 0; i < this.state.a; i++) {
+//     for (var i = 0; i < a; i++) {
 //       if (flag) {
 //         cx = cx + w;
 //         cy = cy1;
@@ -42,12 +42,12 @@
 
 //     }
 
-
+// var b=this.props.data;
 //     var l = [];
-//     for (var i = 1; i <= this.state.b.length; i++) {
-//       var index1 = (this.state.b[i - 1][0] - 1) * 2;
-//       var index2 = (this.state.b[i - 1][1] - 1) * 2;
-//       var weight = this.state.b[i - 1][2];
+//     for (var i = 1; i <= b.length; i++) {
+//       var index1 = (b[i - 1][0] - 1) * 2;
+//       var index2 = (b[i - 1][1] - 1) * 2;
+//       var weight = b[i - 1][2];
 //       var a = this.state.graph[index1];
 //       var c = this.state.graph[index2];
 //       this.l.push(<Line points={[a.props.x, a.props.y, c.props.x, c.props.y]} stroke='black' strokeWidth={3} />)
@@ -67,8 +67,9 @@
 //     return (
 
 //       <div >
-//         <Kruskal nodes={this.state.a} connections={this.state.b} graph={this.state.graph} lines={this.state.lines}/>
-
+//         {/* <Kruskal nodes={this.state.a} connections={this.state.b} graph={this.state.graph} lines={this.state.lines}/> */}
+// {this.state.graph}
+// {this.state.lines}
 //       </div>
 //     );
 

@@ -14,7 +14,7 @@ class Kruskal extends React.Component {
         };
     }
 
-    union(x, y,connections) {
+    union(x, y, connections) {
         console.log("-----------");
         var j = this.state.i;
         var lines = this.state.lines;
@@ -25,8 +25,8 @@ class Kruskal extends React.Component {
         var weight = connections[j][2];
         var d = this.state.graph[index1];
         var c = this.state.graph[index2];
-        var temp1= <Circle id={d.props.id} x={d.props.x} y={d.props.y} radius={d.props.radius} fill="red" />
-        var temp2= <Circle id={c.props.id} x={c.props.x} y={c.props.y} radius={c.props.radius} fill="red" />
+        var temp1 = <Circle id={d.props.id} x={d.props.x} y={d.props.y} radius={d.props.radius} fill="red" />
+        var temp2 = <Circle id={c.props.id} x={c.props.x} y={c.props.y} radius={c.props.radius} fill="red" />
         var temp3 = <Line points={[d.props.x, d.props.y, c.props.x, c.props.y]} stroke="red" strokeWidth={3} />
         graph.push(temp1);
         graph.push(temp2);
@@ -54,6 +54,7 @@ class Kruskal extends React.Component {
     }
 
     start(N, connections) {
+        console.log(connections)
         for (var i = 0; i <= N; i++) {
             this.parent[i] = i;
         }
@@ -110,7 +111,7 @@ class Kruskal extends React.Component {
         this.updateline(graph);
         if (this.find(x) != this.find(y)) {
 
-            this.union(x, y,this.state.connections);
+            this.union(x, y, this.state.connections);
         }
 
         console.log(j);
@@ -136,7 +137,7 @@ class Kruskal extends React.Component {
 
 
                 <div >
-
+                    {/* <button onClick={() => this.start(this.props.nodes, this.props.connections)}>start</button> */}
                     <button onClick={() => this.start(4, [[1, 2, 3], [1, 3, 4], [1, 4, 1],[2, 4, 2]])}>start</button>
                     <button onClick={() => this.minimumCost(this.state.connections)}>step</button>
 

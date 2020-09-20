@@ -4,8 +4,8 @@ class Algo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            numberofnodes:{},
-            data:{}
+            numberofnodes:0,
+            data:[]
         };
     }
     
