@@ -25,16 +25,39 @@ class Kruskal extends React.Component {
         var weight = connections[j][2];
         var d = this.state.graph[index1];
         var c = this.state.graph[index2];
-        var temp1 = <Circle id={d.props.id} x={d.props.x} y={d.props.y} radius={d.props.radius} fill="red" />
-        var temp2 = <Circle id={c.props.id} x={c.props.x} y={c.props.y} radius={c.props.radius} fill="red" />
+
+        let newgraph = this.state.graph.map((item, idx)=>{
+            if (idx==index1){
+                return <Circle id={item.props.id} x={item.props.x} y={item.props.y} radius={item.props.radius} fill="red" />;
+            }else if (idx==index2){
+                return <Circle id={item.props.id} x={item.props.x} y={item.props.y} radius={item.props.radius} fill="red" />;
+            }else{
+                return item
+            }
+
+        })
+
+        // lines[d+"-"c] = Line
+
+        this.setState({
+            graph: newgraph,
+            lines
+        });
+
+        // var temp1 = 
+        // var temp2 = 
         var temp3 = <Line points={[d.props.x, d.props.y, c.props.x, c.props.y]} stroke="red" strokeWidth={3} />
-        graph.push(temp1);
-        graph.push(temp2);
-        //graph.push(temp3);
+        // graph.push(temp1);
+        // graph.push(temp2);
+        lines.push(temp3);
         console.log("D" + d.props.id + "   C" + c.props.id);
-        console.log("nodes" + temp1.props.fill);
-        //this.updateline(lines);
-        this.updateline(graph);
+      //  console.log("nodes" + temp1.props.fill);
+        // this.updateline(lines);
+        // this.updategraph(graph);
+        // this.setState({
+        //     graph,
+        //     lines
+        // });
         var px = this.find(x);
         var py = this.find(y);
         if (px != py) {
@@ -81,10 +104,19 @@ class Kruskal extends React.Component {
         lines.push(<Line points={[200, 100, 500, 100]} stroke='black' strokeWidth={3} />);
         lines.push(<Text text="4" x={350} y={100} fontSize={20} />)
 
+        // lines= {
+        //     "1,4": Line,
+        //     "2,3": Line
+        // }
 
-        this.setState({ graph: graph })
-        this.setState({ lines: lines })
-        this.setState({ connections: connections })
+
+        this.setState({ 
+            graph,
+            lines,
+            connections
+         })
+        // this.setState({ lines: lines })
+        // this.setState({ connections: connections })
 
         console.log("graph" + this.state.graph);
     }
@@ -103,12 +135,16 @@ class Kruskal extends React.Component {
         var d = this.state.graph[index1];
         var c = this.state.graph[index2];
         var temp = <Line points={[d.props.x, d.props.y, c.props.x, c.props.y]} stroke="blue" strokeWidth={3} />
-        //lines.push(temp);
-        graph.push(temp);
+        lines.push(temp);
+        // graph.push(temp);
         console.log("D" + d.props.id + "   C" + c.props.id);
         console.log("line" + temp.props.stroke);
         // Object.assign(d, temp)
-        this.updateline(graph);
+        // this.updateline(lines);
+        this.setState({
+            lines,
+            graph
+        })
         if (this.find(x) != this.find(y)) {
 
             this.union(x, y, this.state.connections);
@@ -120,15 +156,17 @@ class Kruskal extends React.Component {
 
     }
 
-    updategraph(p) {
-        this.setState({ graph: p })
+    // updategraph(p) {
+    //     this.setState({ graph: p })
+    // }
+    // updateline(q) {
+    //     this.setState({ lines: q })
+    // }
+
+
+    componentDidUpdate(){
+        console.log(this)
     }
-    updateline(q) {
-        this.setState({ lines: q })
-    }
-
-
-
 
     render() {
 
