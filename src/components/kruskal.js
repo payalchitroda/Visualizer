@@ -10,11 +10,11 @@ class Kruskal extends React.Component {
             i: 0,
             graph: [],
             lines: [],
-
             connections: [],
             x: 0,
             y: 0,
             flag: false,
+            message:""
         };
     }
 
@@ -86,23 +86,39 @@ class Kruskal extends React.Component {
         var graph = []
         var lines = []
 
-        graph.push(<Circle id="1" x={200} y={100} radius={50} fill="DarkGoldenRod" />);
-        graph.push(<Text text="1" x={200} y={100} fontSize={20} />);
-        graph.push(<Circle id="2" x={200} y={300} radius={50} fill="DarkGoldenRod" />);
-        graph.push(<Text text="2" x={200} y={300} fontSize={20} />);
-        graph.push(<Circle id="3" x={500} y={100} radius={50} fill="DarkGoldenRod" />);
-        graph.push(<Text text="3" x={500} y={100} fontSize={20} />);
-        graph.push(<Circle id="4" x={500} y={300} radius={50} fill="DarkGoldenRod" />);
-        graph.push(<Text text="4" x={500} y={300} fontSize={20} />);
+        var cx = 0, cy1 = 100, w = 300, cy2 = 300, cy;
+        var flag = true;
+    
+        for (var i = 0; i < N; i++) {
+            console.log(N);
+          if (flag) {
+            cx = cx + w;
+            cy = cy1;
+          }
+          else {
+            cy = cy2;
+          }
+          flag = !flag;
+          graph.push(<Circle id={i + 1} x={cx} y={cy} radius={50} fill="DarkGoldenRod" />);
+            graph.push(<Text text={i + 1} x={cx} y={cy} fontSize={20} />);
+    
+        }
+    
+        for (var i = 1; i <= connections.length; i++) {
+          var index1 = (connections[i - 1][0] - 1) * 2;
+          var index2 = (connections[i - 1][1] - 1) * 2;
+          var weight = connections[i - 1][2];
+          var a = graph[index1];
+          var c = graph[index2];
+          var index = a.props.id + "-" + c.props.id;
+          lines.push(<Line id={index}points={[a.props.x, a.props.y, c.props.x, c.props.y]} stroke='black' strokeWidth={3} />)
+          var tx = ((a.props.x + c.props.x) / 2);
+          var ty = ((a.props.y + c.props.y) / 2);
+          lines.push(<Text text={weight} x={tx} y={ty} fontSize={20} />)
+        }
+    
+    
 
-        lines.push(<Line id="1-4" points={[200, 100, 500, 300]} stroke='black' strokeWidth={3} />);
-        lines.push(<Text text="1" x={350} y={200} fontSize={20} />)
-        lines.push(<Line id="2-4" points={[200, 300, 500, 300]} stroke='black' strokeWidth={3} />);
-        lines.push(<Text text="2" x={350} y={300} fontSize={20} />)
-        lines.push(<Line id="1-2" points={[200, 100, 200, 300]} stroke='black' strokeWidth={3} />);
-        lines.push(<Text text="3" x={200} y={200} fontSize={20} />)
-        lines.push(<Line id="1-3" points={[200, 100, 500, 100]} stroke='black' strokeWidth={3} />);
-        lines.push(<Text text="4" x={350} y={100} fontSize={20} />)
 
         this.setState({
             graph,
@@ -156,7 +172,7 @@ class Kruskal extends React.Component {
 
     completed()
     {
-        console.log("completed");
+        this.setState({ message: "Completed!!!" })
     }
 
     decide(connections) {
@@ -186,16 +202,19 @@ class Kruskal extends React.Component {
 
 
                 <div >
-                    {/* <button onClick={() => this.start(this.props.nodes, this.props.connections)}>start</button> */}
-                    <button onClick={() => this.start(4, [[1, 2, 3], [1, 3, 4], [1, 4, 1], [2, 4, 2]])}>start</button>
+                    <button onClick={() => this.start(this.props.nodes, this.props.connections)}>start</button>
+                    {/* <button onClick={() => this.start(4, [[1, 2, 3], [1, 3, 4], [1, 4, 1], [2, 4, 2]])}>start</button> */}
                     <button onClick={() => this.decide(this.state.connections)}>step</button>
-
+                    <div style={{ marginLeft: "800px" }}>
+                  <h2>  {this.state.message}</h2>
+                    </div>
                     <Stage width={1600} height={800}>
                         <Layer id="layer">
                             {this.state.graph}
                             {this.state.lines}
                         </Layer>
                     </Stage>
+                   
                 </div>
             </div>
         );

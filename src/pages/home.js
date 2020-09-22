@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Algo from './algo';
+import KruskalInput from './kruskalinput';
 import CoinChangeInput from './coinchangeinput';
 
 function home() {
@@ -10,9 +10,9 @@ function home() {
         <div>
             <Router>
                 <Button variant="dark">
-                    <Link to="/algo">kruskal</Link>
+                    <Link to="/kruskalinput">kruskal</Link>
                 </Button>
-                <Route path="/algo" render={() => <Algo />} />
+                <Route path="/kruskalinput" render={() => <KruskalInput />} />
                 <Button variant="dark">
                     <Link to="/coinchangeinput">coin chnage</Link>
                 </Button>

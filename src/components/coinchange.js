@@ -10,17 +10,25 @@ class CoinChange extends React.Component {
             deno: [],
             ans: [],
             i: 0,
-            n: 0,
             denominationanimate: [],
             amountanimate: [],
+            flag: false,
+            message: "",
+            answeranimate:[]
+
+
         };
     }
     start(deno, V) {
+
         var d = [];
         var a = [];
-        this.setState({ deno: deno })
-        this.setState({ V: V })
-        this.setState({ n: deno.length - 1 })
+        this.setState({
+            deno: deno,
+            V: V,
+            i: deno.length - 1
+        })
+        console.log("length" + this.state.i)
         const styles = {
             rectangle: {
                 display: 'inline-block',
@@ -33,27 +41,106 @@ class CoinChange extends React.Component {
         for (var i = 0; i < deno.length; i++) {
             d.push(<div style={styles.rectangle}>{deno[i]}</div>);
         }
-        this.setState({ denominationanimate: d })
-        this.setState({ amountanimate: a })
+        this.setState({
+            denominationanimate: d,
+            amountanimate: a
+        })
 
 
     }
 
     findMin(deno, V) {
-        var n = this.state.n;
-        var ans = this.state.ans;
-        var j = this.state.i;
-
-        for (var i = n - 1; i >= 0; i--) {
-            while (V >= deno[i]) {
-                V -= deno[i];
-                ans.push(deno[i]);
+        console.log("outer loop   "+"V" + V + "   deno" + deno[this.state.i])
+        console.log("i" + this.state.i)
+        const styles = {
+            rectangle: {
+                display: 'inline-block',
+                width: '50px',
+                height: '50px',
+                background: 'yellow',
             }
         }
+        let newdenominationanimate = this.state.denominationanimate.map((item, idx) => {
 
-        for (var i = 0; i < ans.length; i++) {
-            console.log(ans[i]);
+            if (idx == this.state.i) {
+                return <div style={styles.rectangle}>{deno[this.state.i]}</div>;
+            } 
+            else
+            return item;
+    
+        })
+    
+        this.setState({
+            denominationanimate:newdenominationanimate
+        })
+
+        if (V >= deno[this.state.i]) {
+            console.log("V" + V + "   deno" + deno[this.state.i])
+            this.setState({ flag: !this.state.flag })
         }
+        else
+        {
+            this.setState({
+                i: this.state.i - 1,
+            })
+            this.findMin(deno, V)
+
+        }
+        if (this.state.i == -1) {
+            return this.completed();
+        }
+        
+    }
+
+    findMinInnerLoop(deno, V) {
+        console.log("inner loop")
+        console.log("V" + V + "   deno" + deno[this.state.i])
+        var ans = this.state.ans;
+        if (V >= deno[this.state.i]) {
+        ans.push(deno[this.state.i]);
+        this.setState({
+            V: V - deno[this.state.i],
+            ans,
+        })
+    }
+    let newamountanimate = this.state.amountanimate.map((item, idx) => {
+        if (idx == 0) {
+            return <div style={item.props.style}>{V}</div>;
+        } 
+
+    })
+
+    this.setState({
+        amountanimate: newamountanimate
+    })
+        if (this.state.V < deno[this.state.i]) {
+            this.setState({
+                i: this.state.i - 1,
+                flag: !this.state.flag
+            })
+        }
+
+        if (this.state.i == 0) {
+            return this.completed();
+        }
+    }
+
+    decide(deno, V) {
+
+        if (this.state.flag == true) {
+            return this.findMinInnerLoop(deno, V);
+        }
+        else {
+            return this.findMin(deno, V)
+        }
+    }
+    completed() {
+
+        console.log("answer"+this.state.ans.length)
+        for (var i = 0; i < this.state.ans.length; i++) {
+            console.log(this.state.ans[i]);
+        }
+        this.setState({ message: "Completed!!!" })
     }
 
     render() {
@@ -68,7 +155,8 @@ class CoinChange extends React.Component {
         return (
             <div>
                 <button onClick={() => this.start(this.props.denomination, this.props.amount)}>start</button>
-                <button onClick={() => this.findMin(this.state.denomination, this.state.amount)}>step</button>
+                <button onClick={() => this.decide(this.state.deno, this.state.V)}>step</button>
+                {this.state.message}
                 <br />
                 <br />
                 <div style={{ marginLeft: "100px" }}>

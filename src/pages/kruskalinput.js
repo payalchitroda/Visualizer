@@ -1,6 +1,6 @@
 import React from 'react';
-import Node from '../components/node';
-class Algo extends React.Component {
+import Kruskal from '../components/kruskal.js';
+class KruskalInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +11,6 @@ class Algo extends React.Component {
     
     graphinput(node, edges) {
         var n = parseInt(node);
-        //console.log("edge"+edges.length);
         var e = [];
         var k = 0;
         for (var i = 0; i < (edges.length/6); i++) {
@@ -23,11 +22,6 @@ class Algo extends React.Component {
             e.push(data);
         }
         console.log("e"+e);
-        // for (var i = 0; i < n; i++) {
-        //     for (var j = 0; j < 3; j++) {
-        //         console.log(e[i][j]);
-        //     }
-        // }
         this.setState({data:e,numberofnodes:n});
     }
 
@@ -44,7 +38,7 @@ class Algo extends React.Component {
                     <button onClick={() => { this.graphinput(n.value, edges.value); n.value = ''; edges.value = ''; }}>
                         Submit
                 </button>
-                    <Node data={this.state.data} numberofnodes = {this.state.numberofnodes}/>
+                    <Kruskal nodes = {this.state.numberofnodes} connections={this.state.data} /> />
                 </div>
 
             </div>
@@ -53,4 +47,4 @@ class Algo extends React.Component {
 }
 
 
-export default Algo;
+export default KruskalInput;
