@@ -14,8 +14,9 @@ class CoinChange extends React.Component {
             amountanimate: [],
             flag: false,
             message: "",
-            answeranimate:[]
-
+            msg1: "",
+            msg2: "",
+            msg3: "",
 
         };
     }
@@ -35,84 +36,111 @@ class CoinChange extends React.Component {
                 width: '50px',
                 height: '50px',
                 background: 'orange',
+                borderStyle: 'solid',
+                textAlign: 'center',
+                padding: '10px 0'
             }
         }
+
         a.push(<div style={styles.rectangle}>{V}</div>)
         for (var i = 0; i < deno.length; i++) {
             d.push(<div style={styles.rectangle}>{deno[i]}</div>);
         }
         this.setState({
             denominationanimate: d,
-            amountanimate: a
+            amountanimate: a,
+            msg1: "Amount Left",
+            msg2: "Denominations Available"
+
         })
 
 
     }
 
     findMin(deno, V) {
-        console.log("outer loop   "+"V" + V + "   deno" + deno[this.state.i])
+        console.log("outer loop   " + "V" + V + "   deno" + deno[this.state.i])
         console.log("i" + this.state.i)
         const styles = {
             rectangle: {
                 display: 'inline-block',
                 width: '50px',
                 height: '50px',
-                background: 'yellow',
+                background: 'rgb(0, 153, 255)',
+                borderStyle: 'solid',
+                textAlign: 'center',
+                padding: '10px 0'
             }
         }
         let newdenominationanimate = this.state.denominationanimate.map((item, idx) => {
 
             if (idx == this.state.i) {
                 return <div style={styles.rectangle}>{deno[this.state.i]}</div>;
-            } 
+            }
             else
-            return item;
-    
+                return item;
+
         })
-    
+
         this.setState({
-            denominationanimate:newdenominationanimate
+            denominationanimate: newdenominationanimate
         })
 
         if (V >= deno[this.state.i]) {
             console.log("V" + V + "   deno" + deno[this.state.i])
             this.setState({ flag: !this.state.flag })
         }
-        else
-        {
+        else {
             this.setState({
                 i: this.state.i - 1,
             })
-            this.findMin(deno, V)
+            // this.findMin(deno, V)
 
         }
         if (this.state.i == -1) {
             return this.completed();
         }
-        
+
     }
 
     findMinInnerLoop(deno, V) {
         console.log("inner loop")
         console.log("V" + V + "   deno" + deno[this.state.i])
-        var ans = this.state.ans;
+        var a = []
+        // var ans = this.state.ans;
         if (V >= deno[this.state.i]) {
-        ans.push(deno[this.state.i]);
-        this.setState({
-            V: V - deno[this.state.i],
-            ans,
-        })
-    }
-    let newamountanimate = this.state.amountanimate.map((item, idx) => {
-        if (idx == 0) {
-            return <div style={item.props.style}>{V}</div>;
-        } 
+            const styles = {
+                rectangle: {
+                    display: 'inline-block',
+                    width: '50px',
+                    height: '50px',
+                    background: 'MediumSeaGreen',
+                    borderStyle: 'solid',
+                    textAlign: 'center',
+                    padding: '10px 0'
+                }
+            }
+            a.push(<div style={styles.rectangle}>{deno[this.state.i]}</div>);
+            var ans = a.concat(this.state.ans);
 
-    })
 
-    this.setState({
-        amountanimate: newamountanimate
-    })
+            this.setState({
+                V: V - deno[this.state.i],
+                ans,
+                msg3: "Denomination used"
+            })
+            let newamountanimate = this.state.amountanimate.map((item, idx) => {
+                if (idx == 0) {
+                    return <div style={item.props.style}>{V - deno[this.state.i]}</div>;
+                }
+
+            })
+
+            this.setState({
+                amountanimate: newamountanimate
+            })
+            console.log(this.state.ans)
+        }
+
         if (this.state.V < deno[this.state.i]) {
             this.setState({
                 i: this.state.i - 1,
@@ -136,7 +164,7 @@ class CoinChange extends React.Component {
     }
     completed() {
 
-        console.log("answer"+this.state.ans.length)
+        console.log("answer" + this.state.ans.length)
         for (var i = 0; i < this.state.ans.length; i++) {
             console.log(this.state.ans[i]);
         }
@@ -153,21 +181,39 @@ class CoinChange extends React.Component {
             }
         }
         return (
-            <div>
+            <div style={{ width: "100%" }} >
                 <button onClick={() => this.start(this.props.denomination, this.props.amount)}>start</button>
                 <button onClick={() => this.decide(this.state.deno, this.state.V)}>step</button>
-                {this.state.message}
                 <br />
-                <br />
-                <div style={{ marginLeft: "100px" }}>
-                    {this.state.amountanimate}
+                <div style={{ width: "60%", float: "left" }} >
+                    <div style={{ marginLeft: "300px" }}>
+                        <h3>  {this.state.msg1}</h3>
+                        <br />
+                        {this.state.amountanimate}
+                    </div>
+                    <br />
+                    <br />
+                    <div style={{ marginLeft: "300px" }}>
+                        <h3> {this.state.msg2}</h3>
+                        <br />
+                        {this.state.denominationanimate}
+                    </div>
+                    <br />
+                    <br />
+                    <div style={{ marginLeft: "300px" }}>
+                        <h3 > {this.state.msg3}</h3>
+                        <br />
+                        {this.state.ans}
+                    </div>
+                    <br />
+                    <div style={{ marginLeft: "300px" }}>
+                        <h3>  {this.state.message}</h3>
+                    </div>
                 </div>
-                <div style={{ marginLeft: "300px" }}>
-                    {this.state.denominationanimate}
-                </div>
-
+                <div style={{ marginLeft: "40%"}} >
             </div>
-        );
+            </ div >
+                );
     }
 }
 
