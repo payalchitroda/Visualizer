@@ -85,6 +85,8 @@ class CoinChange extends React.Component {
             denominationanimate: newdenominationanimate
         })
 
+        
+
         if (V >= deno[this.state.i]) {
             console.log("V" + V + "   deno" + deno[this.state.i])
             this.setState({ flag: !this.state.flag })
@@ -96,8 +98,11 @@ class CoinChange extends React.Component {
             // this.findMin(deno, V)
 
         }
-        if (this.state.i == -1) {
-            return this.completed();
+        if (this.state.V != 0 && this.state.i == -1) {
+            return this.completed("no solution");
+        }
+        else if (this.state.i == 0 && this.state.V == 0) {
+            return this.completed("completed");
         }
 
     }
@@ -134,6 +139,7 @@ class CoinChange extends React.Component {
                 }
 
             })
+           
 
             this.setState({
                 amountanimate: newamountanimate
@@ -147,9 +153,11 @@ class CoinChange extends React.Component {
                 flag: !this.state.flag
             })
         }
-
-        if (this.state.i == 0) {
-            return this.completed();
+        if (this.state.V != 0 && this.state.i == -1) {
+            return this.completed("no solution");
+        }
+        else if (this.state.i == 0) {
+            return this.completed("completed");
         }
     }
 
@@ -162,13 +170,10 @@ class CoinChange extends React.Component {
             return this.findMin(deno, V)
         }
     }
-    completed() {
+    completed(s) {
 
-        console.log("answer" + this.state.ans.length)
-        for (var i = 0; i < this.state.ans.length; i++) {
-            console.log(this.state.ans[i]);
-        }
-        this.setState({ message: "Completed!!!" })
+        
+        this.setState({ message: s })
     }
 
     render() {

@@ -12,10 +12,13 @@ class CoinChangeInput extends React.Component {
     coinchangeinput(denominations, amount) {
         var a = parseInt(amount);
         var d = [];
-        for (var i = 0; i < (denominations.length); i = i + 2) {
-            d.push(denominations.charAt(i));
+        var res = denominations.split(",");
+        res.sort(function (a, b) { return (a - b) });
+
+        for (var i = 0; i < (res.length); i++) {
+          //  d.push(denominations.charAt(i));
+            d.push(res[i]);
         }
-        console.log("e" + d);
         this.setState({ denomination: d, amount: a });
     }
 
