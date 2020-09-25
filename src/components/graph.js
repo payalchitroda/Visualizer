@@ -50,4 +50,5 @@ Main --> state = empty ---> state - nodes, update --> render --> <Kruskal></Krus
 
 
 
-    
+   
+

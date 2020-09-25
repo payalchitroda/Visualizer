@@ -28,7 +28,7 @@ class CoinChangeInput extends React.Component {
         return (
             <div>
 
-                <div style={{ backgroundColor: "LightGray", height: "630px" }}>
+                <div style={{ backgroundColor: "LightGray", height: "700px" }}>
                     <h1>Coin Change Problem</h1>
                 Denominations<input type="text" ref={denomination => { d = denomination; }} />
                 amount<input type="text" ref={amount => { a = amount; }} />
@@ -46,3 +46,4 @@ class CoinChangeInput extends React.Component {
 
 
 export default CoinChangeInput;
+

@@ -1,5 +1,6 @@
 import React from 'react';
 import Konva from 'konva';
+import Image from './Screenshot (544).png'
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 class CoinChange extends React.Component {
 
@@ -156,7 +157,7 @@ class CoinChange extends React.Component {
         if (this.state.V != 0 && this.state.i == -1) {
             return this.completed("no solution");
         }
-        else if (this.state.i == 0) {
+        else if (this.state.i == 0 || (this.state.V- deno[this.state.i])==0) {
             return this.completed("completed");
         }
     }
@@ -216,6 +217,9 @@ class CoinChange extends React.Component {
                     </div>
                 </div>
                 <div style={{ marginLeft: "40%"}} >
+               <p style={{ fontSize: "20px"}}> <b>The coin change problem is finding the minimum number of coins from certain denominations that add up to a given amount of money
+              </b> </p>     <h2 style={{ textAlign: "center"}}><b>Algorithm</b></h2>
+             <div style={{ height: "400px", width:"600px", borderStyle:"solid" ,marginLeft: "450px"}}> <img src={Image}/></div>
             </div>
             </ div >
                 );
