@@ -171,6 +171,21 @@ class CoinChange extends React.Component {
             return this.findMin(deno, V)
         }
     }
+    play(deno, V) {
+        
+            if (this.state.flag == true) {
+                this.findMinInnerLoop(deno, V);
+            }
+            else {
+                this.findMin(deno, V)
+            }
+         
+          setTimeout(() => {
+              if(this.state.i>=0)
+          this.play(this.state.deno,this.state.V);
+        }, 2000);
+        
+    }
     completed(s) {
 
         
@@ -190,6 +205,7 @@ class CoinChange extends React.Component {
             <div style={{ width: "100%" }} >
                 <button onClick={() => this.start(this.props.denomination, this.props.amount)}>start</button>
                 <button onClick={() => this.decide(this.state.deno, this.state.V)}>step</button>
+                <button onClick={() => this.play(this.state.deno, this.state.V)}>play</button>
                 <br />
                 <div style={{ width: "60%", float: "left" }} >
                     <div style={{ marginLeft: "300px" }}>

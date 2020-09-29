@@ -14,19 +14,19 @@ class Kruskal extends React.Component {
             x: 0,
             y: 0,
             flag: false,
-            message:""
+            message: ""
         };
     }
 
     union(x, y, connections) {
-        console.log(x+"-----------"+y);
+        console.log(x + "-----------" + y);
         var lines = this.state.lines;
         var graph = this.state.graph;
         var index1 = (x - 1) * 2;
         var index2 = (y - 1) * 2;
         var d = this.state.graph[index1];
         var c = this.state.graph[index2];
-        
+
         let newgraph = this.state.graph.map((item, idx) => {
             if (idx == index1) {
                 return <Circle id={item.props.id} x={item.props.x} y={item.props.y} radius={item.props.radius} fill="red" />;
@@ -51,7 +51,7 @@ class Kruskal extends React.Component {
         this.setState({ flag: !this.state.flag })
         this.setState({
             graph: newgraph,
-            lines:newline
+            lines: newline
         });
 
 
@@ -88,36 +88,36 @@ class Kruskal extends React.Component {
 
         var cx = 0, cy1 = 100, w = 300, cy2 = 300, cy;
         var flag = true;
-    
+
         for (var i = 0; i < N; i++) {
             console.log(N);
-          if (flag) {
-            cx = cx + w;
-            cy = cy1;
-          }
-          else {
-            cy = cy2;
-          }
-          flag = !flag;
-          graph.push(<Circle id={i + 1} x={cx} y={cy} radius={50} fill="DarkGoldenRod" />);
+            if (flag) {
+                cx = cx + w;
+                cy = cy1;
+            }
+            else {
+                cy = cy2;
+            }
+            flag = !flag;
+            graph.push(<Circle id={i + 1} x={cx} y={cy} radius={50} fill="DarkGoldenRod" />);
             graph.push(<Text text={i + 1} x={cx} y={cy} fontSize={20} />);
-    
+
         }
-    
+
         for (var i = 1; i <= connections.length; i++) {
-          var index1 = (connections[i - 1][0] - 1) * 2;
-          var index2 = (connections[i - 1][1] - 1) * 2;
-          var weight = connections[i - 1][2];
-          var a = graph[index1];
-          var c = graph[index2];
-          var index = a.props.id + "-" + c.props.id;
-          lines.push(<Line id={index}points={[a.props.x, a.props.y, c.props.x, c.props.y]} stroke='black' strokeWidth={3} />)
-          var tx = ((a.props.x + c.props.x) / 2);
-          var ty = ((a.props.y + c.props.y) / 2);
-          lines.push(<Text text={weight} x={tx} y={ty} fontSize={20} />)
+            var index1 = (connections[i - 1][0] - 1) * 2;
+            var index2 = (connections[i - 1][1] - 1) * 2;
+            var weight = connections[i - 1][2];
+            var a = graph[index1];
+            var c = graph[index2];
+            var index = a.props.id + "-" + c.props.id;
+            lines.push(<Line id={index} points={[a.props.x, a.props.y, c.props.x, c.props.y]} stroke='black' strokeWidth={3} />)
+            var tx = ((a.props.x + c.props.x) / 2);
+            var ty = ((a.props.y + c.props.y) / 2);
+            lines.push(<Text text={weight} x={tx} y={ty} fontSize={20} />)
         }
-    
-    
+
+
 
 
         this.setState({
@@ -160,7 +160,7 @@ class Kruskal extends React.Component {
         if (this.find(x) != this.find(y)) {
             this.setState({ x: x, y: y })
             this.setState({ flag: !this.state.flag })
-            console.log(x+"     "+y)
+            console.log(x + "     " + y)
             // this.union(x, y, this.state.connections);
         }
 
@@ -170,29 +170,48 @@ class Kruskal extends React.Component {
 
     }
 
-    completed()
-    {
+    completed() {
         this.setState({ message: "Completed!!!" })
+    }
+    play(connections) {
+
+        if (this.state.i == (connections.length) && this.state.flag == false) {
+            this.completed();
+        }
+        else {
+            if (this.state.flag == false) {
+                this.minimumCost(connections);
+            }
+            else {
+                this.union(this.state.x, this.state.y, connections)
+            }
+        }
+
+        setTimeout(() => {
+            if(this.state.i<=connections.length)
+        this.play(this.state.connections);
+      }, 2000);
+
     }
 
     decide(connections) {
 
-        if(this.state.i==(connections.length) && this.state.flag==false)
-        {
+        if (this.state.i == (connections.length) && this.state.flag == false) {
             return this.completed();
         }
-        else{
-        if (this.state.flag == false) {
-            return this.minimumCost(connections);
-        }
         else {
-            return this.union(this.state.x, this.state.y, connections)
+            if (this.state.flag == false) {
+                return this.minimumCost(connections);
+            }
+            else {
+                return this.union(this.state.x, this.state.y, connections)
+            }
         }
-    }
+
     }
 
     componentDidUpdate() {
-        console.log(this)
+        //console.log(this)
     }
 
     render() {
@@ -205,8 +224,9 @@ class Kruskal extends React.Component {
                     <button onClick={() => this.start(this.props.nodes, this.props.connections)}>start</button>
                     {/* <button onClick={() => this.start(4, [[1, 2, 3], [1, 3, 4], [1, 4, 1], [2, 4, 2]])}>start</button> */}
                     <button onClick={() => this.decide(this.state.connections)}>step</button>
+                    <button onClick={() => this.play(this.state.connections)}>play</button>
                     <div style={{ marginLeft: "800px" }}>
-                  <h2>  {this.state.message}</h2>
+                        <h2>  {this.state.message}</h2>
                     </div>
                     <Stage width={1600} height={800}>
                         <Layer id="layer">
@@ -214,7 +234,7 @@ class Kruskal extends React.Component {
                             {this.state.lines}
                         </Layer>
                     </Stage>
-                   
+
                 </div>
             </div>
         );
