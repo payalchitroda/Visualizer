@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import KruskalInput from './kruskalinput';
 import CoinChangeInput from './coinchangeinput';
-
+import CoinChangeInputDp from './coinchangeinputdp';
 function home() {
 
     return (
@@ -17,6 +17,10 @@ function home() {
                     <Link to="/coinchangeinput">coin chnage</Link>
                 </Button>
                 <Route path="/coinchangeinput" render={() => <CoinChangeInput />} />
+                <Button variant="dark">
+                    <Link to="/coinchangeinputdp">coin chnage DP</Link>
+                </Button>
+                <Route path="/coinchangeinputdp" render={() => <CoinChangeInputDp />} />
                 
             </Router>
             
