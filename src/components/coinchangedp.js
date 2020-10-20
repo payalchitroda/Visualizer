@@ -17,12 +17,30 @@ class CoinChangeDp extends React.Component {
             j: 0,
             message: "",
             result: 0,
-            flag:false
+            flag:false,
+            code:[],
 
 
 
         };
     }
+
+    // for (var i = 0; i < deno.length; i++) {
+    //     for (var j = 0; j <= V; j++) {
+    //         if (i == 0 || j == 0) {
+    //             dp[i][j] = j;
+    //         }
+    //         else if(j<=deno[i])
+    //         {
+    //             dp[i][j] = dp[i - 1][j];
+    //         }
+    //         else {
+    //             dp[i][j] = Math.min(dp[i - 1][j], dp[i][j -deno[i]] + 1);
+    //         }
+    //     }
+    // }
+
+
     start(deno, V) {
 
         var d = [];
@@ -31,6 +49,20 @@ class CoinChangeDp extends React.Component {
             deno: deno,
             V: V,
         })
+
+        var code=[]
+        var cx=1000,cy=100;
+        code.push(<Text id="c1" text="for (var i = 0; i < deno.length; i++) {" x={cx} y={cy} fontSize={20} />);
+        code.push(<Text id="c2" text="    for (var j = 0; j <= V; j++) {" x={cx} y={cy+25} fontSize={20} />);
+        code.push(<Text id="c3" text="       if (i == 0 || j == 0)" x={cx} y={cy+50} fontSize={20} />);
+        code.push(<Text id="c4" text="           dp[i][j] = j;" x={cx} y={cy+75} fontSize={20} />);
+        code.push(<Text id="c5" text="       else if(j<=deno[i])" x={cx} y={cy+100} fontSize={20} />);
+        code.push(<Text id="c6" text="           dp[i][j] = dp[i - 1][j];" x={cx} y={cy+125} fontSize={20} />);
+        code.push(<Text id="c7" text="       else" x={cx} y={cy+150} fontSize={20} />);
+        code.push(<Text id="c8" text="           dp[i][j] =min(dp[i - 1][j], dp[i][j -deno[i]] + 1);" x={cx} y={cy+175} fontSize={20} />);
+        code.push(<Text id="c9" text="     }" x={cx} y={cy+200} fontSize={20} />);
+        code.push(<Text id="c10" text=" }" x={cx} y={cy+225} fontSize={20} />);
+
 
         var rx = 150, ry = 100;
         var ii = 1
@@ -70,6 +102,7 @@ class CoinChangeDp extends React.Component {
         this.setState({
             denominationanimate: d,
             dp: b,
+            code:code
 
         })
 
@@ -81,8 +114,27 @@ class CoinChangeDp extends React.Component {
         var i = this.state.i;
         var j = this.state.j;
         var dp = this.state.dp;
+
+        var a="for (var i = "+i +"; i < deno.length; i++) {";
+        var b="    for (var j = "+j+"; j <= V; j++) {";
+
+        let newcodefor = this.state.code.map((item, idx) => {
+            if (item.props.id == "c1") {
+                return <Text id={item.props.id} text={a} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+            }
+            else if(item.props.id == "c2")
+            {
+                return <Text id={item.props.id} text={b} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+            }
+            else
+            return item;
+
+        })
+        // this.setState({
+        //     code:newcode
+        // })
+
         
-console.log("----"+i+"-"+j+"-----")
         if (this.state.flag) {
             this.completed();
             return;
@@ -101,10 +153,24 @@ console.log("----"+i+"-"+j+"-----")
 
 
             })
+
+
             var ii = 1
             newbox.push(<Text id={ii} text={dp[i][j]} x={rx + 25} y={ry + 25} fontSize={20} />);
+
+            let newcode = newcodefor.map((item, idx) => {
+                if (item.props.id == "c4") {
+                   
+                    return <Text id="c4" text="           dp[i][j] = j;" x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+                }
+                else
+                return <Text id={item.props.id} text={item.props.text} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+
+
+            })
             this.setState({
-                denominationanimate: newbox
+                denominationanimate: newbox,
+                code:newcode
             })
 
 
@@ -134,8 +200,20 @@ console.log("----"+i+"-"+j+"-----")
                 })
                 var ii = 1
                 newbox.push(<Text id={ii} text={dp[i][j]} x={rx + 25} y={ry + 25} fontSize={20} />);
+
+                let newcode = newcodefor.map((item, idx) => {
+                    if (item.props.id == "c6") {
+                       
+                        return <Text id="c6" text="           dp[i][j] = dp[i - 1][j];" x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+                    }
+                    else
+                    return <Text id={item.props.id} text={item.props.text} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+    
+    
+                })
                 this.setState({
-                    denominationanimate: newbox
+                    denominationanimate: newbox,
+                    code:newcode
                 })
 
 
@@ -170,8 +248,21 @@ console.log("----"+i+"-"+j+"-----")
                 var ii = 1
                 newbox.push(<Text id={ii} text={dp[i][j]} x={rx + 25} y={ry + 25} fontSize={20} />);
 
+                let newcode = newcodefor.map((item, idx) => {
+                    if (item.props.id == "c8") {
+                       
+                        return <Text id="c8" text="           dp[i][j] = min(dp[i - 1][j], dp[i][j -deno[i]] + 1);" x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+                    }
+                    else
+                    return <Text id={item.props.id} text={item.props.text} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+                    
+    
+    
+                })
+
                 this.setState({
-                    denominationanimate: newbox
+                    denominationanimate: newbox,
+                    code:newcode
                 })
 
             }
@@ -204,6 +295,8 @@ console.log("----"+i+"-"+j+"-----")
             i: i,
             dp: dp,
             flag:flag,
+           
+
 
         })
 
@@ -212,17 +305,10 @@ console.log("----"+i+"-"+j+"-----")
 
     completed() {
         // this.setState({ message: "Minimum coins"+this.state.dp[this.state.i-1][this.state.V] })
-        this.setState({ message: "Minimum coins" + this.state.result })
+        this.setState({ message: "Minimum coins: " + this.state.result })
     }
     play() {
-
-        // if (this.state.i == this.state.deno.length) {
-        //     console.log("i" + this.state.i);
-        //     this.completed();
-        // }
-        // else {
             this.algo()
-        // }
 
         setTimeout(() => {
             if (this.state.i <= this.state.deno.length)
@@ -246,13 +332,15 @@ console.log("----"+i+"-"+j+"-----")
                 <br />
 
                 <div style={{ marginLeft: "50px" }}>
-                    <h3>{this.state.message}</h3>
+                    
 
-                    <Stage width={1600} height={800}>
+                    <Stage width={1600} height={400}>
                         <Layer id="layer">
                             {this.state.denominationanimate}
+                            {this.state.code}
                         </Layer>
                     </Stage>
+                    <h3>{this.state.message}</h3>
                 </div>
 
 
