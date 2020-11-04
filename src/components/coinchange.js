@@ -1,6 +1,5 @@
 import React from 'react';
 import Konva from 'konva';
-import Image from './Screenshot (544).png'
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 class CoinChange extends React.Component {
 
@@ -11,6 +10,7 @@ class CoinChange extends React.Component {
             deno: [],
             ans: [],
             i: 0,
+            code:[],
             denominationanimate: [],
             amountanimate: [],
             flag: false,
@@ -30,6 +30,18 @@ class CoinChange extends React.Component {
             V: V,
             i: deno.length - 1
         })
+
+        var code=[]
+        var cx=300,cy=50;
+        code.push(<Text id="c1" text="sort(denomination);" x={cx} y={cy} fontSize={20} fill='green'/>);
+        code.push(<Text id="c2" text="for(int i=n-1;i>denomination.length;i--){" x={cx} y={cy+25} fontSize={20} />);
+        code.push(<Text id="c3" text="       while(Amount>=denomination[i]){" x={cx} y={cy+50} fontSize={20} />);
+        code.push(<Text id="c4" text="           V -= denomination[i];" x={cx} y={cy+75} fontSize={20} />);
+        code.push(<Text id="c5" text="           ans.add(denomination[i]);" x={cx} y={cy+100} fontSize={20} />);
+        code.push(<Text id="c6" text="       }" x={cx} y={cy+125} fontSize={20} />);
+        code.push(<Text id="c7" text=" }" x={cx} y={cy+150} fontSize={20} />);
+        
+        
         console.log("length" + this.state.i)
         const styles = {
             rectangle: {
@@ -51,12 +63,22 @@ class CoinChange extends React.Component {
             denominationanimate: d,
             amountanimate: a,
             msg1: "Amount Left",
-            msg2: "Denominations Available"
+            msg2: "Denominations Available",
+            code:code
 
         })
 
 
     }
+    // sort(denomination)
+    // for(int i=n-1;i>denomination.length;i--)
+    // {
+    //     while(Amount>=denomination[i])
+    //     {
+    //         V -= denomination[i] 
+    //         ans.add(denomination[i])
+    //     }
+    // }
 
     findMin(deno, V) {
         console.log("outer loop   " + "V" + V + "   deno" + deno[this.state.i])
@@ -72,6 +94,17 @@ class CoinChange extends React.Component {
                 padding: '10px 0'
             }
         }
+
+         var i = this.state.i;
+        var b="for(int i="+i+";i>denomination.length;i--){";
+        let newcode = this.state.code.map((item, idx) => {
+            if (item.props.id == "c2") {
+                return <Text id={item.props.id} text={b} x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+            }
+            else
+            return <Text id={item.props.id} text={item.props.text} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+
+        })
         let newdenominationanimate = this.state.denominationanimate.map((item, idx) => {
 
             if (idx == this.state.i) {
@@ -83,7 +116,8 @@ class CoinChange extends React.Component {
         })
 
         this.setState({
-            denominationanimate: newdenominationanimate
+            denominationanimate: newdenominationanimate,
+            code:newcode
         })
 
         
@@ -113,6 +147,20 @@ class CoinChange extends React.Component {
         console.log("V" + V + "   deno" + deno[this.state.i])
         var a = []
         // var ans = this.state.ans;
+
+       
+        var c="       while(Amount>=denomination[i]){";
+
+        let newcodefor = this.state.code.map((item, idx) => {
+          
+           if(item.props.id == "c3")
+            {
+                return <Text id={item.props.id} text={c} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+            }
+            else
+            return item;
+
+        })
         if (V >= deno[this.state.i]) {
             const styles = {
                 rectangle: {
@@ -140,10 +188,25 @@ class CoinChange extends React.Component {
                 }
 
             })
+            let newcode = newcodefor.map((item, idx) => {
+                if (item.props.id == "c4" ) {
+                   
+                    return <Text id={item.props.id} text="           V -= denomination[i];" x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+                }
+                else if(item.props.id == "c5")
+                {
+                    return <Text id={item.props.id} text="           ans.add(denomination[i]);" x={item.props.x} y={item.props.y} fontSize={20} fill='red'/>;
+                }
+                else
+                return <Text id={item.props.id} text={item.props.text} x={item.props.x} y={item.props.y} fontSize={20} fill='green'/>;
+
+
+            })
            
 
             this.setState({
-                amountanimate: newamountanimate
+                amountanimate: newamountanimate,
+                code:newcode
             })
             console.log(this.state.ans)
         }
@@ -219,6 +282,7 @@ class CoinChange extends React.Component {
                         <h3> {this.state.msg2}</h3>
                         <br />
                         {this.state.denominationanimate}
+                       
                     </div>
                     <br />
                     <br />
@@ -231,11 +295,20 @@ class CoinChange extends React.Component {
                     <div style={{ marginLeft: "300px" }}>
                         <h3>  {this.state.message}</h3>
                     </div>
+                 
                 </div>
                 <div style={{ marginLeft: "40%"}} >
                <p style={{ fontSize: "20px"}}> <b>The coin change problem is finding the minimum number of coins from certain denominations that add up to a given amount of money
               </b> </p>     <h2 style={{ textAlign: "center"}}><b>Algorithm</b></h2>
-             <div style={{ height: "400px", width:"600px", borderStyle:"solid" ,marginLeft: "450px"}}> <img src={Image}/></div>
+             {/* <div style={{ height: "400px", width:"600px", borderStyle:"solid" ,marginLeft: "450px"}}> <img src={Image}/></div> */}
+             <div style={{ marginLeft: "30%"}} >
+             <Stage width={700} height={300}>
+                        <Layer id="layer">
+                           
+                            {this.state.code}
+                        </Layer>
+                    </Stage>
+          </div>
             </div>
             </ div >
                 );

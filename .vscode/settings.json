@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "SOSENDBUF.C": "cpp",
+        "SORECBUF.C": "cpp",
+        "TCPNODELAY.C": "cpp"
+    }
+}
